@@ -1,3 +1,10 @@
+/** References for major assistance with REACT code
+https://www.npmjs.com
+https://github.com/tsega/udacity
+https://github.com/ddavig
+**/
+ 
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import BooksDetail from './BooksDetail';

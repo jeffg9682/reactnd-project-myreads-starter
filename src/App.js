@@ -1,3 +1,9 @@
+/** References for major assistance with REACT code
+https://www.npmjs.com
+https://github.com/tsega/udacity
+https://github.com/ddavig
+**/
+
 import React from 'react';
 import SearchPage from './SearchPage';
 import './App.css';
