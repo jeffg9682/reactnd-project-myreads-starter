@@ -6,46 +6,33 @@ https://github.com/ddavig
  
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import BooksDetail from './BooksDetail';
 import * as BooksAPI from './BooksAPI';
 
-
 class SearchPage extends Component {
-  state = {
-      books: [],
-      query: ''
-  };
+      state = {}
+      
+  handleUpdateQuery = event => {BooksAPI.search(event.target.value, 20).then(searchResultsBooks => {
+    if (!searchResultsBooks || searchResultsBooks.error) 
+      { this.setState({ searchResultsBooks: null }) 
+    return 
+  } 
+    
+    searchResultsBooks = searchResultsBooks.map(this.ensureBookHasCorrectShelf)
 
-  handleUpdateQuery(query) {
-      BooksAPI.search(query).then(books => books ? this.setState({ books }) : []);
-      this.setState({ query });
+    this.setState({ searchResultsBooks })
+   });
   }
 
-  handleBookShelf(book, shelf) {
-    BooksAPI.update(book, shelf)
-        .then(() => shelf !== 'none' ? alert(`${book.title} has been added to your shelf!`) : null)
-        .catch(() => alert('Something went wrong! Please try again!'));
+  ensureBookHasCorrectShelf = book => { 
+    const bookOnShelf = this.props.booksOnShelves.filter(item => item.id === book.id)[0]
+    
+    book.shelf = bookOnShelf ? bookOnShelf.shelf : ''
+
+    return book
   }
-
-  renderSearchResults() {
-      const { books, query } = this.state;
-
-      if (query) {
-          return books.error ?
-              <div>No results found</div>
-              : books.map((book, index) => {
-                  return (
-                      <BooksDetail
-                          key={index}
-                          book={book}
-                          handleBookShelf={this.handleBookShelf.bind(this)}
-                      />
-                  );
-              });
-      }
-  }
-
 
     render() {
       return (
@@ -61,19 +48,16 @@ class SearchPage extends Component {
               <input
                   type="text"
                   placeholder="Search by title or author"
-                  value={this.state.query}
-                  onChange={e => this.handleUpdateQuery(e.target.value)}
+                  onChange={event => this.handleUpdateQuery(event)}
               />
             </div>
           </div>
-          <div className="search-books-results">
-            <ol className="books-grid">
-                {this.renderSearchResults()}
-            </ol>
+          <div className="search-books-results"> {
+            this.state.searchResultsBooks && <BooksDetail books={this.state.searchResultsBooks} isSearch={true} 
+            amendShelfHandler={this.props.amendShelfHandler} />} 
           </div>
-        </div>
-      );
-  }
-}
+      </div>
 
-export default SearchPage;
+SearchPage.propTypes = { booksOnShelves: PropTypes.array, amendShelfHandler: PropTypes.func.isRequired }
+
+export default SearchPage

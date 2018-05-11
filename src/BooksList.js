@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import escapeRegExp from 'escape-string-regexp'
+import escapeRegExp from 'escape-string-regexp';
 import BooksDetail from './BooksDetail';
 import * as BooksAPI from './BooksAPI';
 
@@ -9,7 +9,7 @@ class BooksList extends Component {
     state = {
         currentlyReading: [],
         wantToRead: [],
-        read: []
+        read: [],
     };
 
     componentDidMount() {

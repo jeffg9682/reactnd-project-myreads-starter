@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const BooksListDetail = ({ book, handleBookShelf }) => {
+const BooksDetail = ({ book, handleBookShelf }) => {
 
         const imageThumb = book.imageLinks ? book.imageLinks.smallThumbnail : null;
 
@@ -27,4 +27,4 @@ const BooksListDetail = ({ book, handleBookShelf }) => {
         );
 };
 
-export default BooksListDetail;
+export default BooksDetail;

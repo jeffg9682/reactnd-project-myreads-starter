@@ -7,5 +7,6 @@ This is my first project for the React section of the Front End Web Developement
 How to launch:
 
 1. cd into react-project-myreads-starter
-2. run npm start
+2. run npm install
+3. run npm start
 
