@@ -11,8 +11,14 @@ import { Link } from 'react-router-dom';
 import BooksDetail from './BooksDetail';
 import * as BooksAPI from './BooksAPI';
 
+
 class SearchPage extends Component {
       state = {}
+
+      static propTypes = {
+        booksOnShelves: PropTypes.array,
+        amendShelfHandler: PropTypes.func.isRequired
+      }
       
   handleUpdateQuery = event => {BooksAPI.search(event.target.value, 20).then(searchResultsBooks => {
     if (!searchResultsBooks || searchResultsBooks.error) 
@@ -53,11 +59,13 @@ class SearchPage extends Component {
             </div>
           </div>
           <div className="search-books-results"> {
-            this.state.searchResultsBooks && <BooksDetail books={this.state.searchResultsBooks} isSearch={true} 
+            this.state.searchResultsBooks && <BooksDetail books = {this.state.searchResultsBooks} isSearch={true} 
             amendShelfHandler={this.props.amendShelfHandler} />} 
           </div>
-      </div>
+        </div>
+      )
+    }
+  }
 
-SearchPage.propTypes = { booksOnShelves: PropTypes.array, amendShelfHandler: PropTypes.func.isRequired }
 
 export default SearchPage
